@@ -1,0 +1,9 @@
+customer_id,customer_name,country,signup_date,segment
+C001,Acme Logistics,CA,2023-01-14,enterprise
+C002,Northwind Retail,CA,2023-03-02,smb
+C003,Blue Harbor Foods,US,2023-04-19,enterprise
+C004,Maple Freight,CA,2023-05-27,smb
+C005,Cedar Analytics,US,2023-07-08,startup
+C006,Granite Supply Co,CA,2023-08-15,smb
+C007,Riverside Imports,US,2023-09-30,enterprise
+C008,Summit Consulting,CA,2023-11-11,startup
