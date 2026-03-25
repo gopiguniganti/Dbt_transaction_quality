@@ -1,0 +1,51 @@
+version: 2
+
+models:
+  - name: stg_customers
+    description: "Cleaned, one-row-per-customer view of the raw customer feed."
+    columns:
+      - name: customer_id
+        description: "Primary key for a customer."
+        data_tests:
+          - unique
+          - not_null
+      - name: country_code
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['CA', 'US']
+      - name: segment
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['enterprise', 'smb', 'startup']
+
+  - name: stg_transactions
+    description: "Cleaned, one-row-per-transaction view of the raw transactions feed. All raw rows are retained."
+    columns:
+      - name: transaction_id
+        description: "Primary key for a transaction."
+        data_tests:
+          - unique
+          - not_null
+      - name: customer_id
+        description: "Foreign key to stg_customers."
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_customers')
+                field: customer_id
+      - name: amount
+        data_tests:
+          - not_null
+      - name: currency
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['CAD', 'USD']
+      - name: status
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['completed', 'pending', 'cancelled']
