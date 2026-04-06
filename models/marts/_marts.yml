@@ -1,0 +1,44 @@
+version: 2
+
+models:
+  - name: dim_customers
+    description: "Customer dimension with lifetime transaction activity."
+    columns:
+      - name: customer_id
+        data_tests:
+          - unique
+          - not_null
+      - name: transaction_count
+        data_tests:
+          - not_null
+      - name: lifetime_amount
+        data_tests:
+          - not_null
+
+  - name: fct_transactions
+    description: "Transaction fact table. Every source transaction is retained exactly once."
+    columns:
+      - name: transaction_id
+        data_tests:
+          - unique
+          - not_null
+      - name: customer_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_customers')
+                field: customer_id
+      - name: amount
+        data_tests:
+          - not_null
+
+  - name: fct_daily_transaction_summary
+    description: "Daily settled/pending/cancelled amounts per currency."
+    columns:
+      - name: transaction_date
+        data_tests:
+          - not_null
+      - name: total_amount
+        data_tests:
+          - not_null
